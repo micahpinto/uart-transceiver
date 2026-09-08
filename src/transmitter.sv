@@ -1,5 +1,5 @@
 module transmitter #(
-	parameter CLOCKS_PER_PULSE = 10417  // For 9600 baud
+	parameter CLOCKS_PER_PULSE = 100
 )
 (
 	input logic [7:0] data_in,
@@ -18,7 +18,6 @@ module transmitter #(
 	} state_t;
 
 	state_t state, next_state;
-	
 	logic [7:0] data_reg;
 	logic [2:0] bit_count;
 	logic [12:0] clk_count;
@@ -29,7 +28,6 @@ module transmitter #(
 			data_reg <= 8'b0;
 			bit_count <= 3'b0;
 			clk_count <= 13'b0;
-			tx <= 1'b1;
 		end else begin
 			state <= next_state;
 
@@ -55,6 +53,7 @@ module transmitter #(
 
 	always_comb begin
 		next_state = state;
+		tx = 1'b1;  // Default to idle
 
 		case (state)
 			IDLE: begin
