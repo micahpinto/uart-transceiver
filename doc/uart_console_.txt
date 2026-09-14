@@ -1,0 +1,30 @@
+System Reset Complete
+
+Sending: 0x5 (0101)
+  RX Ready 		(waited 541 clocks)
+  PASS: led_out = 0x5
+
+Sending: 0xa (1010)
+  RX Ready 		(waited 1036 clocks)
+  PASS: led_out = 0xa
+
+Sending: 0xf (1111)
+  RX Ready 		(waited 1531 clocks)
+  PASS: led_out = 0xf
+
+Sending: 0x0 (0000)
+  RX Ready 		(waited 2026 clocks)
+  PASS: led_out = 0x0
+
+Sending: 0x3 (0011)
+  RX Ready 		(waited 2521 clocks)
+  PASS: led_out = 0x3
+
+Sending: 0xc (1100)
+  RX Ready 		(waited 3016 clocks)
+  PASS: led_out = 0xc
+
+
+All Tests Passed!
+$finish called from file "testbench.sv", line 66.
+$finish at simulation time 150665000
