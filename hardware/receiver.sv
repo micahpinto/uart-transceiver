@@ -1,7 +1,7 @@
 `timescale 1ns/1ps
 module receiver #(
 	parameter CLK_FREQ = 100_000_000,
-	parameter BAUD_RATE = 1_000_000
+	parameter BAUD_RATE = 9600
 )
 (
 	input logic clk,
@@ -11,8 +11,8 @@ module receiver #(
 	output logic ready,
 	output logic [7:0] data_out
 );
-localparam CLOCKS_PER_BIT = CLK_FREQ / BAUD_RATE;  // 100 clocks per bit
-	localparam BIT_MIDDLE = CLOCKS_PER_BIT / 2 - 1;    // Sample at clock 49
+localparam CLOCKS_PER_PULSE = CLK_FREQ / BAUD_RATE;  // 100 clocks per bit
+	localparam BIT_MIDDLE = CLOCKS_PER_PULSE / 2 - 1;    // Sample at clock 49
 	
 	typedef enum logic [2:0] {
 		IDLE   = 3'b000,
@@ -60,7 +60,7 @@ localparam CLOCKS_PER_BIT = CLK_FREQ / BAUD_RATE;  // 100 clocks per bit
 		end else begin
 			state <= next_state;
 
-			if (clk_count == CLOCKS_PER_BIT - 1) begin
+			if (clk_count == CLOCKS_PER_PULSE - 1) begin
 				clk_count <= 20'b0;
 			end else begin
 				clk_count <= clk_count + 1'b1;
@@ -96,7 +96,7 @@ if (state == STOP && clk_count == BIT_MIDDLE) begin
 			end
 
 			START: begin
-				if (clk_count == CLOCKS_PER_BIT - 1) begin
+				if (clk_count == CLOCKS_PER_PULSE - 1) begin
 					next_state = DATA;
 				end
 			end
@@ -104,13 +104,13 @@ if (state == STOP && clk_count == BIT_MIDDLE) begin
 			DATA: begin
 				// After receiving all 8 bits, when clk_count reaches 99, go to STOP
 				// This means we'll have 100 more clock cycles in STOP state
-				if (bit_count == 4'd8 && clk_count == CLOCKS_PER_BIT - 1) begin
+				if (bit_count == 4'd8 && clk_count == CLOCKS_PER_PULSE - 1) begin
 					next_state = STOP;
 				end
 			end
 
 			STOP: begin
-				if (clk_count == CLOCKS_PER_BIT - 1) begin
+				if (clk_count == CLOCKS_PER_PULSE - 1) begin
 					next_state = IDLE;
 				end
 			end
