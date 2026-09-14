@@ -1,8 +1,8 @@
 module uart #(
-	parameter CLOCKS_PER_PULSE = 10417  // For 9600 baud
-)
+	parameter CLK_FREQ = 100_000_000,
+	parameter BAUD_RATE = 9600)
 (
-	input logic [3:0] data_in,
+	input logic [3:0] data_in, // only in this case to verify that the 4 inputs appear at the  output, since we have only 4 leds and not 8.
 	input logic data_en,
 	input logic clk,
 	input logic rstn,
