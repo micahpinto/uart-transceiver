@@ -1,6 +1,6 @@
 module transmitter #(
     parameter CLK_FREQ = 100_000_000,
-    parameter BAUD_RATE = 1_000_000
+    parameter BAUD_RATE = 9600
 )
 (
 	input logic [7:0] data_in,
@@ -11,11 +11,11 @@ module transmitter #(
 	output logic tx_busy
 );
 localparam CLOCKS_PER_PULSE = CLK_FREQ / BAUD_RATE;
-	typedef enum logic [1:0] {
-		IDLE   = 2'b00,
-		START  = 2'b01,
-		DATA   = 2'b10,
-		STOP   = 2'b11
+	typedef enum logic [2:0] {
+		IDLE   = 3'b000,
+		START  = 3'b001,
+		DATA   = 3'b010,
+		STOP   = 3'b011
 	} state_t;
 
 	state_t state, next_state;
