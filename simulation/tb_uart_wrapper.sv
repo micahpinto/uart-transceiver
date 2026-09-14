@@ -1,6 +1,6 @@
 `timescale 1ns/1ps
 
-module tb_uart;
+module tb_uart_wrapper;
 
 	localparam CLOCKS_PER_PULSE = 100;
 	localparam CLK_PERIOD = 10;
@@ -13,7 +13,7 @@ module tb_uart;
 	logic tx_busy;
 	logic rx_ready;
 
-	uart #(.CLOCKS_PER_PULSE(CLOCKS_PER_PULSE)) dut (
+	uart_wrapper #(.CLOCKS_PER_PULSE(CLOCKS_PER_PULSE)) dut (
 		.clk(clk),
 		.rstn(rstn),
 		.data_in(data_in),
